@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "moduleResolution": "node",
+    "outDir": "./li-player-request/",
+    "sourceMap": true,
+    "lib": ["ES6", "ES2017", "DOM"],
+    "types": ["foundry-pc-types", "@types/socket.io-client"],
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/module/*.ts", "src/module.ts"]
+}

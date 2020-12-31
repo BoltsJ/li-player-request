@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "moduleResolution": "node",
+    "target": "ES2017",
+    "outDir": "./dist/",
+    "module": "es6",
+    "sourceMap": true,
+    "lib": ["ES6", "ES2017", "DOM"],
+    "types": ["foundry-pc-types", "@types/socket.io-client"],
+    "strict": true,
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "declaration": true
+  },
+  "include": ["src/**/*.ts"]
+}

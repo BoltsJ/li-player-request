@@ -1,0 +1,17 @@
+{
+    "name": "li-player-request",
+    "title": "Lancer Initiative Player Request Exension",
+    "description": "Allows players to request activation from the GM",
+    "author": "Bolts",
+    "type": "module",
+    "version": "0.0.0",
+    "minimumCoreVersion": "0.7.0",
+    "compatibleCoreVersion": "0.7.9",
+    "socket": "true",
+    "esmodules": [
+        "./module.js"
+    ],
+    "url": "",
+    "manifest": "",
+    "download": ""
+}
