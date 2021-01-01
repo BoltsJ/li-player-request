@@ -44,24 +44,21 @@ Hooks.once("ready", () => {
  * activations left. The hook passes the combat, the combatant id, and the user
  * id of the user that clicked the button.
  */
-Hooks.on(
-  "LancerCombatRequestActivate",
-  (combat: LancerCombat, combatantId: string, userId: string) => {
-    // Only request for owned combatants that have activations available
-    const combatant = combat.getCombatant(combatantId);
-    if (combatant.permission < 3 || combatant.flags.activations.value < 1 || !combat.started) {
-      return;
-    }
-
-    // send a request to activate to the GM(s)
-    console.log("Sending activation request for " + combatantId);
-    ui.notifications.info("Sending request to go next.");
-    /** @ts-ignore */
-    game.socket.emit("module.li-player-request", {
-      scene: combat.scene._id,
-      combat: combat.id,
-      combatant: combatantId,
-      user: userId,
-    });
+Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: string) => {
+  // Only request for owned combatants that have activations available
+  const combatant = combat.getCombatant(combatantId);
+  if (combatant.permission < 3 || combatant.flags.activations.value < 1 || !combat.started) {
+    return;
   }
-);
+
+  // send a request to activate to the GM(s)
+  console.log("Sending activation request for " + combatantId);
+  ui.notifications.info("Sending request to go next.");
+  /** @ts-ignore */
+  game.socket.emit("module.li-player-request", {
+    scene: combat.scene._id,
+    combat: combat.id,
+    combatant: combatantId,
+    user: game.userId,
+  });
+});
