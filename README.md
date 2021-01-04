@@ -2,6 +2,10 @@
 
 Extends [Lancer Initiative](https://github.com/BoltsJ/lancer-initiative) allowing players to request the GM to switch to their turn. This requires version 0.5.0 or later in order to function.
 
+## Install
+
+Use this manifest url in the foundry module browser: https://github.com/BoltsJ/li-player-request/releases/latest/download/module.json
+
 ## Development
 
 This serves primarily as documentation to the Hook in Lancer Initiative so that others can customize what happens when players click the tracker.
