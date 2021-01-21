@@ -3,10 +3,17 @@ import { LancerCombat } from "lancer-initiative";
 
 Hooks.once("ready", () => {
   // Only a gm can approve, so only register the socket handler for them
+  if (!game || !game.user) return;
   if (!game.user.isGM) return;
   console.log("li-player-request | Registering socket callback");
 
-  game.socket.on("module.li-player-request", function (data: any) {
+  game.socket.on("module.li-player-request", function (data: {
+    combat: string;
+    combatant: string;
+    user: string;
+    scene: string;
+  }) {
+    if (!game || !game.combats || !game.users) return;
     // Get data to pass to the form
     const combat = game.combats.find(c => c.id === data.combat) as LancerCombat;
     const combatant = combat.getCombatant(data.combatant);
@@ -39,6 +46,7 @@ Hooks.once("ready", () => {
  * id of the user that clicked the button.
  */
 Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: string) => {
+  if (!game || !ui.notifications) return;
   // Only request for owned combatants that have activations available
   const combatant = combat.getCombatant(combatantId);
   if (combatant.permission < 3 || combatant.flags.activations.value < 1 || !combat.started) {
