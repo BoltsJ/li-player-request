@@ -1,5 +1,5 @@
 // Get the proper type data for the combat tracker
-import { LancerCombat, isActivations } from "lancer-initiative";
+import { LancerCombat, Activations } from "lancer-initiative";
 
 Hooks.once("ready", () => {
   // Only a gm can approve, so only register the socket handler for them
@@ -67,3 +67,17 @@ Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: stri
     user: game.userId,
   });
 });
+
+/**
+ * Typeguard for activations flag of combatants
+ */
+function isActivations(
+  v: any // eslint-disable-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
+  // eslint hates typeguards
+): v is Activations {
+  return (
+    typeof v === "object" &&
+    (typeof v.max === "undefined" || typeof v.max === "number") &&
+    (typeof v.value === "undefined" || typeof v.value === "number")
+  );
+}
