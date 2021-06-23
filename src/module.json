@@ -5,8 +5,8 @@
     "author": "Bolts",
     "type": "module",
     "version": "0.0.0",
-    "minimumCoreVersion": "0.7.0",
-    "compatibleCoreVersion": "0.7.9",
+    "minimumCoreVersion": "0.8.6",
+    "compatibleCoreVersion": "0.8.7",
     "socket": "true",
     "esmodules": [
         "./module.js"

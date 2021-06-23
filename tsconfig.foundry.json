@@ -5,9 +5,9 @@
     "outDir": "./li-player-request/",
     "sourceMap": true,
     "lib": ["ES6", "ES2017", "DOM"],
-    "types": ["@league-of-foundry-developers/foundry-vtt-types", "@types/socket.io-client"],
+    "types": ["@types/socket.io-client"],
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/module/*.ts", "src/module.ts"]
+  "include": ["src/module/*.ts", "src/module.ts", "src/global.d.ts"]
 }

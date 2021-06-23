@@ -7,7 +7,7 @@
     "module": "es6",
     "sourceMap": true,
     "lib": ["ES6", "ES2017", "DOM"],
-    "types": ["@league-of-foundry-developers/foundry-vtt-types", "@types/socket.io-client"],
+    "types": ["@types/socket.io-client"],
     "strict": true,
     "skipLibCheck": true,
     "importHelpers": true,

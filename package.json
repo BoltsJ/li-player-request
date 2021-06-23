@@ -1,6 +1,6 @@
 {
   "name": "li-player-request",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "Lancer Initiative Ask For Activation",
   "main": "dist/index.js",
   "scripts": {
@@ -11,11 +11,10 @@
   "author": "bolts",
   "license": "",
   "dependencies": {
-    "lancer-initiative": "github:BoltsJ/lancer-initiative",
-    "@types/socket.io-client": "^1.4.34"
+    "@types/socket.io-client": "^1.4.34",
+    "lancer-initiative": "github:BoltsJ/lancer-initiative"
   },
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^0.7.9-2",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }

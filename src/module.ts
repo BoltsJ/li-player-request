@@ -1,5 +1,5 @@
 // Get the proper type data for the combat tracker
-import { LancerCombat, Activations } from "lancer-initiative";
+import { LancerCombat, LancerCombatant, Activations } from "lancer-initiative";
 
 Hooks.once("ready", () => {
   // Only a gm can approve, so only register the socket handler for them
@@ -11,10 +11,14 @@ Hooks.once("ready", () => {
     function (data: { combat: string; combatant: string; user: string; scene: string }) {
       if (!game.combats || !game.users) return;
       // Get data to pass to the form
-      const combat = game.combats.find(c => c.id === data.combat) as LancerCombat | null;
+      const combat = game.combats.find(
+        (c: LancerCombat) => c.id === data.combat
+      ) as LancerCombat | null;
       if (!combat) return;
-      const combatant = combat.getCombatant(data.combatant);
-      const combatant_name = combatant.token?.name ?? combatant.name;
+      const combatant = <LancerCombatant | undefined>(
+        combat.getEmbeddedDocument("Combatant", data.combatant)
+      );
+      const combatant_name = combatant?.token?.name ?? combatant?.name ?? "";
       const player_name = game.users.get(data.user)?.name ?? "";
 
       let prompt = new Dialog({
@@ -46,12 +50,12 @@ Hooks.once("ready", () => {
 Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: string) => {
   if (!ui.notifications) return;
   // Only request for owned combatants that have activations available
-  const combatant = combat.getCombatant(combatantId);
+  const combatant = combat.getEmbeddedDocument("Combatant", combatantId);
   if (
     !combatant ||
-    !isActivations(combatant.flags.activations) ||
-    combatant.permission < 3 ||
-    (combatant.flags.activations.value ?? 0) < 1 ||
+    !isActivations(combatant.getFlag("lancer-initiative", "activations")) ||
+    !combatant.isOwner ||
+    (combatant.getFlag("lancer-initiative", "activations").value ?? 0) < 1 ||
     !combat.started
   ) {
     return;
