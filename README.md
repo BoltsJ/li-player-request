@@ -1,6 +1,6 @@
 # Player Activation Request Extension for Lancer Initiative
 
-Extends [Lancer Initiative](https://github.com/BoltsJ/lancer-initiative) allowing players to request the GM to switch to their turn. This requires version 0.5.0 or later in order to function.
+Extends [Lancer Initiative](https://github.com/BoltsJ/lancer-initiative) allowing players to request the GM to switch to their turn. This requires version 0.6.0 or later in order to function.
 
 ## Install
 
@@ -13,6 +13,6 @@ This serves primarily as documentation to the Hook in Lancer Initiative so that 
 Lancer Initiative now provides a Hook when a player clicks on the tracker. The hook receives the following parameters:
 
 * combat: LancerCombat — The combat instance that the hook was triggered from.
-* combatantId: string — The \_id of the Combatant that was clicked
+* combatantId: string — The id of the Combatant that was clicked
 
 In this reference implementation, when a player clicks the tracker, a hooked function checks that the player clicked an owned combatant and if that combatant has remaining activations. If so, then  the sceneId, combatId, combatantId and userId are passed into a socket that is received by the GM(s). The receiving callback displays a dialog to the GM allowing them to approve or deny the activation.
