@@ -1,12 +1,12 @@
 // Get the proper type data for the combat tracker
-import { LancerCombat, LancerCombatant, Activations } from "lancer-initiative";
+import type { LancerCombat, LancerCombatant } from "lancer-initiative";
 
 Hooks.once("ready", () => {
   // Only a gm can approve, so only register the socket handler for them
   if (!game.user?.isGM) return;
   console.log("li-player-request | Registering socket callback");
 
-  game.socket.on(
+  game.socket?.on(
     "module.li-player-request",
     function (data: { combat: string; combatant: string; user: string; scene: string }) {
       if (!game.combats || !game.users) return;
@@ -50,12 +50,12 @@ Hooks.once("ready", () => {
 Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: string) => {
   if (!ui.notifications) return;
   // Only request for owned combatants that have activations available
-  const combatant = combat.getEmbeddedDocument("Combatant", combatantId);
+  const combatant = <LancerCombatant|undefined>combat.getEmbeddedDocument("Combatant", combatantId);
   if (
     !combatant ||
-    !isActivations(combatant.getFlag("lancer-initiative", "activations")) ||
+    !isActivations(combatant.getFlag(CONFIG.LancerInitiative.module, "activations")) ||
     !combatant.isOwner ||
-    (combatant.getFlag("lancer-initiative", "activations").value ?? 0) < 1 ||
+    (combatant.getFlag(CONFIG.LancerInitiative.module, "activations").value ?? 0) < 1 ||
     !combat.started
   ) {
     return;
@@ -64,8 +64,8 @@ Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: stri
   // send a request to activate to the GM(s)
   console.log("Sending activation request for " + combatantId);
   ui.notifications.info("Sending request to go next.");
-  game.socket.emit("module.li-player-request", {
-    scene: combat.scene.id,
+  game.socket?.emit("module.li-player-request", {
+    scene: combat.scene?.id,
     combat: combat.id,
     combatant: combatantId,
     user: game.userId,
@@ -78,7 +78,7 @@ Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: stri
 function isActivations(
   v: any // eslint-disable-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
   // eslint hates typeguards
-): v is Activations {
+): v is LancerCombatant['activations'] {
   return (
     typeof v === "object" &&
     (typeof v.max === "undefined" || typeof v.max === "number") &&
