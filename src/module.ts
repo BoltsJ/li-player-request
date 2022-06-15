@@ -50,12 +50,13 @@ Hooks.once("ready", () => {
 Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: string) => {
   if (!ui.notifications) return;
   // Only request for owned combatants that have activations available
-  const combatant = <LancerCombatant|undefined>combat.getEmbeddedDocument("Combatant", combatantId);
+  const combatant = <LancerCombatant | undefined>(
+    combat.getEmbeddedDocument("Combatant", combatantId)
+  );
   if (
     !combatant ||
-    !isActivations(combatant.getFlag(CONFIG.LancerInitiative.module, "activations")) ||
     !combatant.isOwner ||
-    (combatant.getFlag(CONFIG.LancerInitiative.module, "activations").value ?? 0) < 1 ||
+    (combatant.activations.value ?? 0) < 1 ||
     !combat.started
   ) {
     return;
@@ -71,17 +72,3 @@ Hooks.on("LancerCombatRequestActivate", (combat: LancerCombat, combatantId: stri
     user: game.userId,
   });
 });
-
-/**
- * Typeguard for activations flag of combatants
- */
-function isActivations(
-  v: any // eslint-disable-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-  // eslint hates typeguards
-): v is LancerCombatant['activations'] {
-  return (
-    typeof v === "object" &&
-    (typeof v.max === "undefined" || typeof v.max === "number") &&
-    (typeof v.value === "undefined" || typeof v.value === "number")
-  );
-}
